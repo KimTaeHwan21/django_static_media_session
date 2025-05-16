@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
 {{blog.title|truncatewords:7}}
 {% endblock title%}
 {% block extrahead %}
 {% endblock extrahead %}
+<link rel="stylesheet" href="{% static 'blog/css/detail.css' %}">
 {% block content %}
 <h1 style="text-align: center">{{blog.title}}</h1>
 <br />
@@ -19,5 +21,10 @@
 <hr />
 <section class="option_list">
   <a href="{% url 'home' %}"> 메인화면 </a>
+  <a href="{% url 'update' blog.id %}"> 수정하기 </a>
+  <form action="{% url 'delete' blog.id %}" method="POST" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</button> <!-- 글 삭제 시 정말 삭제할거냐 묻기-->
+  </form>
 </section>
 {% endblock %}
